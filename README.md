@@ -92,7 +92,7 @@ The Warzone is a custom wargame that was built from the ground up for this cours
 a complete and consistent learning platform for us to release the labs and projects to the
 students. The wargame was built ontop of a vanilla Ubuntu 14.04 32-bit server install, and is
 modeled after existing local privilege escalation themed wargames. If you have ever played
-the fantastic [SmashTheStack IO](http://io.smashthestack.org/) wargame, the Warzone has a
+the fantastic [IO wargame](https://io.netgarage.org/) (formerly hosted at SmashTheStack), the Warzone has a
 somewhat similar structure.
 
 <p align="center">
@@ -161,6 +161,7 @@ Once you exploit a level and escalate to the next user (confirm with `whoami`), 
 
 #### VM information
 * admin user: `gameadmin:gameadmin`
+* lecture user: `lecture:lecture`
 * rc files are in `/etc/cfg`
   * All lab/project users have symlinks to these files in their home directories
   * These files are also symlinked in `/etc/skel`
@@ -194,6 +195,21 @@ number of Ubuntu updates.
 
 #### Why can't I login to lab1c?
 Account names are case sensitive, so please check that you're logging in as lab1**C**
+
+#### Why am I getting 'permission denied' errors?
+The warzone marks many files as immutable to prevent users from changing them and
+ruining the game for other players. For example, we don't want the lab2B user to
+delete its `.pass` file or `/levels` files. A few system files, such as `/etc/passwd`,
+are also marked immutable. 
+
+If you would like to modify or delete these files simply remove the immutable flag
+```bash
+chattr -i filename
+```
+We recommend that you add the flag back when you are done making your changes
+```bash
+chattr +i filename
+```
 
 #### Where are the lab solutions?
 Posting solutions spoils the fun and grind of the game, and as an academic resource it is
@@ -266,6 +282,7 @@ International license [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/
 <p align="center">
 <a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="/resources/images/cc-by-nc.png" alt="CC BY-NC 4.0"/></a>
 </p>
+
 **Code**
 
 The code in this repo is covered by the BSD 2-Clause license. You can view this license in [LICENSE](/LICENSE).
